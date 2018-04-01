@@ -3,8 +3,6 @@ from collections import defaultdict
 from inspect import isfunction
 import atexit, sys
 
-#This is apparently bad practice; but should be ok in this particular case.
-import __main__ 
 
 total_time = defaultdict(lambda: 0)
 timing = {}
@@ -38,7 +36,7 @@ def timeto(id):
         total_time[id] += (end - timing[id])
         del timing[id]
 
-def autotime(namespace=__main__.builtins__.locals(), module_name='__main__'):
+def autotime(namespace, module_name='__main__'):
     for name, obj in namespace.items():
         if isfunction(obj) and obj.__module__ == module_name: 
             namespace[name] = timethis(namespace[name]) 
