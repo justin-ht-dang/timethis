@@ -1,7 +1,7 @@
 from time import time
 from collections import defaultdict
 from inspect import isfunction
-import atexit, sys
+from atexit import register
 
 
 total_time = defaultdict(lambda: 0)
@@ -58,4 +58,4 @@ def report():
         print("|{:20}|\t{:10.6f}|".format(func[0], func[1]))
     print(rule)
 
-atexit.register(report)
+register(report)
