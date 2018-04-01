@@ -1,6 +1,6 @@
 from time import time
 from collections import defaultdict
-import atexit
+import atexit, inspect, sys
 
 total_time = defaultdict(lambda: 0)
 timing = {}
@@ -34,6 +34,12 @@ def timeto(id):
         total_time[id] += (end - timing[id])
         del timing[id]
 
+def autotest(namespace, module_name='__main__'):
+    for name, obj in namespace.items():
+        if inspect.isfunction(obj) and obj.__module__ == module_name: 
+            namespace[name] = timethis(namespace[name]) 
+            
+    
 
 def report():
     if timing:
